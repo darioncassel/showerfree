@@ -38,7 +38,7 @@ if (Meteor.isServer) {
         $set: {occupied: occupied, lock: user, lockTime: new Date()},
       });
 
-      Meteor.setInterval(function(){
+      Meteor.setTimeout(function(){
         var thisShower = Showers.findOne(id);
         if(thisShower.occupied && thisShower.lock == user){
           Showers.update(id, {
