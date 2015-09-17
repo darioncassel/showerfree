@@ -36,13 +36,26 @@
       <h3>Instructions</h3>
       <p>Shower 1 = shower with bathroom   |   Shower 2 = shower without bathroom</p>
       <p>Before you enter a shower, check the occupied box. When you're done, uncheck it.
-        Only you can uncheck something you checked.</p>
+        Only you can uncheck something you checked. Showers will uncheck automatically if
+        left checked for more than 45 min.</p>
     </div>
   </div>
 </body>
 
 <template name="shower">
   <h4>{{name}}</h4>
+<<<<<<< Updated upstream
   <p><input type="checkbox" checked="{{occupied}}" {{disabled}} class="toggle-occu"> Occupied</p>
   <p class="time">{{time}}</p>
+=======
+  <p>{{occupied}}</p>
+  <p>{{disabled}}</p>
+  <div class="onoffswitch">
+    <input type="checkbox" checked="{{occupied}}" {{disabled}} name="onoffswitch" class="onoffswitch-checkbox" id="{{_id}}">
+    <label class="onoffswitch-label" for="{{_id}}">
+        <span class="onoffswitch-inner"></span>
+        <span class="onoffswitch-switch"></span>
+    </label>
+  </div>
+>>>>>>> Stashed changes
 </template>
