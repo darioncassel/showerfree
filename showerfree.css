@@ -50,10 +50,14 @@ h1 {
 }
 
 .instructions {
-	margin-bottom: 5em;
+	margin-bottom: 4em;
 }
 
-.shower {
+.copyright {
+	text-align: center;
+}
+.copyright a {
+	color: #89D8FF;
 }
 
 /* switch */
