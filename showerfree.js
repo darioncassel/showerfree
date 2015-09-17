@@ -1,13 +1,23 @@
 if (Meteor.isClient) {
   Showers = new Mongo.Collection("showers")
-  var user=randomString(10);
-  var pass=randomString(10);
-  Accounts.createUser({username:user, password:pass});
-	Meteor.loginWithPassword(user, pass);
-	Meteor.subscribe("showers");
+
+	Meteor.subscribe("showers", function () {
+    if (Meteor.cookie.get('username') == undefined || Meteor.cookie.get('username') == null) {
+      user=randomString(10);
+      var pass=randomString(10);
+      Meteor.cookie.set('username', user)
+      Meteor.cookie.set('password', pass)
+      Accounts.createUser({username:user, password:pass});
+    } else {
+      user = Meteor.cookie.get('username');
+      var pass = Meteor.cookie.get('password');
+    }
+    Meteor.loginWithPassword(user, pass);
+  });
 
   Template.body.events({
     "click .toggle-occu": function () {
+      var user = Meteor.cookie.get('username');
       Meteor.call("updateShower", this._id, !this.occupied, user)
     }
   });
@@ -30,7 +40,7 @@ if (Meteor.isClient) {
 
   Template.shower.helpers({
     disabled: function () {
-      console.log(this.lock)
+      var user = Meteor.cookie.get('username')
       if (user != this.lock && this.occupied) {
         return "disabled";
       }
