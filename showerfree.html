@@ -5,7 +5,8 @@
 <body>
   <div class="wrapper">
     <h1>Which showers are free?</h1>
-    <h2>Floor 1</h2>
+    <div class="floor">
+    <div class="floor-heading"><h2>Floor 1</h2></div>
     <div class="floor-div">
       {{#each showers}}
         {{#if isOne floor}}
@@ -15,8 +16,9 @@
         {{/if}}
       {{/each}}
     </div>
-
-    <h2>Floor 2</h2>
+    </div>
+    <div class="floor">
+    <div class="floor-heading"><h2>Floor 2</h2></div>
     <div class="floor-div">
       {{#each showers}}
         {{#if isTwo floor}}
@@ -26,10 +28,11 @@
         {{/if}}
       {{/each}}
     </div>
+    </div>
   </div>
 </body>
 
 <template name="shower">
   <h4>{{name}}</h4>
-  <input type="checkbox" checked="{{occupied}}" {{disabled}} class="toggle-occu"> Occupied<br>
+  <p><input type="checkbox" checked="{{occupied}}" {{disabled}} class="toggle-occu"> Occupied</p><br>
 </template>
