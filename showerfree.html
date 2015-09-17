@@ -1,0 +1,31 @@
+<head>
+  <title>showerfree</title>
+</head>
+
+<body>
+  <h1>Which showers are free?</h1>
+
+  <h2>Floor 1</h2>
+  <div class="floor-div">
+    {{#each showers}}
+      {{#if isOne floor}}
+        {{> shower}}
+      {{/if}}
+    {{/each}}
+  </div>
+
+  <h2>Floor 2</h2>
+  <div class="floor-div">
+    {{#each showers}}
+      {{#if isTwo floor}}
+        {{> shower}}
+      {{/if}}
+    {{/each}}
+  </div>
+
+</body>
+
+<template name="shower">
+  <h4>{{name}}</h4>
+  <input type="checkbox" checked="{{occupied}}" class="toggle-occu"> Occupied<br>
+</template>
