@@ -3,26 +3,30 @@
 </head>
 
 <body>
-  <h1>Which showers are free?</h1>
+  <div class="wrapper">
+    <h1>Which showers are free?</h1>
+    <h2>Floor 1</h2>
+    <div class="floor-div">
+      {{#each showers}}
+        {{#if isOne floor}}
+          <div class="shower">
+          {{> shower}}
+          </div>
+        {{/if}}
+      {{/each}}
+    </div>
 
-  <h2>Floor 1</h2>
-  <div class="floor-div">
-    {{#each showers}}
-      {{#if isOne floor}}
-        {{> shower}}
-      {{/if}}
-    {{/each}}
+    <h2>Floor 2</h2>
+    <div class="floor-div">
+      {{#each showers}}
+        {{#if isTwo floor}}
+          <div class="shower">
+          {{> shower}}
+          </div>
+        {{/if}}
+      {{/each}}
+    </div>
   </div>
-
-  <h2>Floor 2</h2>
-  <div class="floor-div">
-    {{#each showers}}
-      {{#if isTwo floor}}
-        {{> shower}}
-      {{/if}}
-    {{/each}}
-  </div>
-
 </body>
 
 <template name="shower">
