@@ -38,7 +38,6 @@ h1 {
 .floor-heading {
 	flex-grow: 1;
 	text-align: center;
-	border-right: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .floor-div {
@@ -48,7 +47,10 @@ h1 {
 	flex-wrap: wrap;
 	justify-content: space-around;
 	align-items: stretch;
-	border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.instructions {
+	margin-bottom: 5em;
 }
 
 .shower {
