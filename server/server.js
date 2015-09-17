@@ -1,4 +1,5 @@
 if (Meteor.isServer) {
+  const SHOWER_TIMEOUT = 1000 * 60 * 45; // 45 minutes
   Showers = new Mongo.Collection("showers");
   Accounts.onLogin(function() {
     Meteor.publish("showers", function() {
@@ -36,6 +37,15 @@ if (Meteor.isServer) {
       Showers.update(id, {
         $set: {occupied: occupied, lock: user},
       });
+      
+      Meteor.setInterval(function(){
+        var thisShower = Showers.findOne(id);
+        if(thisShower.occupied && thisShower.lock == user){
+          Showers.update(id, {
+            $set: {occupied: false, lock: null},
+          });
+        }
+      }, SHOWER_TIMEOUT);
     }
   });
 
