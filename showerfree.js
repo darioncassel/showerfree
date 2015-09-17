@@ -5,10 +5,12 @@ function randomString(num) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
-  }
+}
 
 if (Meteor.isClient) {
   Showers = new Mongo.Collection("showers")
+
+  var timeDep = new Tracker.Dependency;
 
 	Meteor.subscribe("showers", function () {
     if (Meteor.cookie.get('username') == undefined || Meteor.cookie.get('username') == null) {
@@ -23,6 +25,10 @@ if (Meteor.isClient) {
     }
     Meteor.loginWithPassword(user, pass);
   });
+
+  Meteor.setInterval(function () {
+    timeDep.changed();
+  }, 60000);
 
   Template.body.events({
     "click .toggle-occu": function () {
@@ -55,6 +61,7 @@ if (Meteor.isClient) {
       }
     },
     time : function () {
+      timeDep.depend();
       return this.occupied ? moment(this.lockTime).from() : "";
     }
   });

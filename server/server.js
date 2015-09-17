@@ -12,7 +12,7 @@ if (Meteor.isServer) {
       if (Showers.find().fetch().length == 0) {
         for(i=1;i<3;i++) {
           var shower = {
-            "name": "shower " + i,
+            "name": "Shower " + i,
             "floor": 1,
             "occupied": false,
             "lock": null
@@ -21,7 +21,7 @@ if (Meteor.isServer) {
         }
         for(i=1;i<3;i++) {
           var shower = {
-            "name": "shower " + i,
+            "name": "Shower " + i,
             "floor": 2,
             "occupied": false,
             "lock": null
@@ -37,7 +37,6 @@ if (Meteor.isServer) {
       Showers.update(id, {
         $set: {occupied: occupied, lock: user, lockTime: new Date()},
       });
-
       Meteor.setInterval(function(){
         var thisShower = Showers.findOne(id);
         if(thisShower.occupied && thisShower.lock == user){
