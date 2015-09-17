@@ -6,30 +6,37 @@
 
 <body>
   <div class="wrapper">
+    <p>"It's tinder meets airbnb for shower availability"</p>
     <h1>Which showers are free?</h1>
     <div class="floor">
-    <div class="floor-heading"><h2>Floor 1</h2></div>
-    <div class="floor-div">
-      {{#each showers}}
-        {{#if isOne floor}}
-          <div class="shower">
-          {{> shower}}
-          </div>
-        {{/if}}
-      {{/each}}
-    </div>
+      <div class="floor-heading"><h2>Floor 1</h2></div>
+      <div class="floor-div">
+        {{#each showers}}
+          {{#if isOne floor}}
+            <div class="shower">
+              {{> shower}}
+            </div>
+          {{/if}}
+        {{/each}}
+      </div>
     </div>
     <div class="floor">
-    <div class="floor-heading"><h2>Floor 2</h2></div>
-    <div class="floor-div">
-      {{#each showers}}
-        {{#if isTwo floor}}
-          <div class="shower">
-          {{> shower}}
-          </div>
-        {{/if}}
-      {{/each}}
+      <div class="floor-heading"><h2>Floor 2</h2></div>
+      <div class="floor-div">
+        {{#each showers}}
+          {{#if isTwo floor}}
+            <div class="shower">
+              {{> shower}}
+            </div>
+          {{/if}}
+        {{/each}}
+      </div>
     </div>
+    <div class="instructions">
+      <h3>Instructions</h3>
+      <p>Shower 1 = shower with bathroom   |   Shower 2 = shower without bathroom</p>
+      <p>Before you enter a shower, check the occupied box, when you come out uncheck it.
+        Only you can uncheck something you checked.</p>
     </div>
   </div>
 </body>
