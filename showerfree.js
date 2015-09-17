@@ -53,6 +53,9 @@ if (Meteor.isClient) {
       if (user != this.lock && this.occupied) {
         return "disabled";
       }
+    },
+    time : function () {
+      return this.occupied ? moment(this.lockTime).from() : "";
     }
   });
 

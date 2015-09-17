@@ -35,9 +35,9 @@ if (Meteor.isServer) {
     },
     updateShower: function(id, occupied, user) {
       Showers.update(id, {
-        $set: {occupied: occupied, lock: user},
+        $set: {occupied: occupied, lock: user, lockTime: new Date()},
       });
-      
+
       Meteor.setInterval(function(){
         var thisShower = Showers.findOne(id);
         if(thisShower.occupied && thisShower.lock == user){
