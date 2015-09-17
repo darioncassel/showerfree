@@ -8,7 +8,7 @@ if (Meteor.isClient) {
 
   Template.body.events({
     "click .toggle-occu": function () {
-      Meteor.call("updateShower", this._id, !this.occupied)
+      Meteor.call("updateShower", this._id, !this.occupied, user)
     }
   });
 
@@ -27,6 +27,15 @@ if (Meteor.isClient) {
       return Showers.find().fetch()
     }
   });
+
+  Template.shower.helpers({
+    disabled: function () {
+      console.log(this.lock)
+      if (user != this.lock && this.occupied) {
+        return "disabled";
+      }
+    }
+  })
 
   function randomString(num) {
 		var text = "";
