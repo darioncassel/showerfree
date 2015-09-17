@@ -1,6 +1,7 @@
 /* CSS declarations go here */
 body {
 	background-color:rgb(133, 180, 251);
+	color:white;
 }
 h1 {
 	text-align: center;
