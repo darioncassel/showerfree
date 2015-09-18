@@ -22,6 +22,9 @@ if (Meteor.isClient) {
       Meteor.cookie.set('canLock', true)
       Accounts.createUser({username:user, password:pass});
     } else {
+      if (Meteor.cookie.get('canLock') == undefined || Meteor.cookie.get('canLock') == null) {
+        Meteor.cookie.set('canLock', true)
+      }
       user = Meteor.cookie.get('username');
       var pass = Meteor.cookie.get('password');
     }
@@ -36,7 +39,6 @@ if (Meteor.isClient) {
     "click .toggle-occu": function () {
       var user = Meteor.cookie.get('username');
       Meteor.cookie.set('canLock', this.occupied);
-      console.log(this.occupied);
       canLockDep.changed();
       Meteor.call("updateShower", this._id, !this.occupied, user)
     }
@@ -63,7 +65,7 @@ if (Meteor.isClient) {
       canLockDep.depend();
       var user = Meteor.cookie.get('username')
       var canLock = Meteor.cookie.get('canLock')
-      if (user != this.lock && this.occupied || !canLock) {
+      if (user != this.lock && this.occupied || canLock=="false") {
         return "disabled";
       }
     },
