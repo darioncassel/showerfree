@@ -70,7 +70,7 @@ h1 {
 /* switch */
 
 .onoffswitch {
-    position: relative; width: 114px;
+    position: relative; width: 110px;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
 }
 .onoffswitch-checkbox {
@@ -96,12 +96,12 @@ h1 {
 }
 .onoffswitch-inner:after {
     content: "Vacant";
-    padding-right: 10px;
+    padding-right: 23px;
     background-color: #40D47E; color: #FFFFFF;
     text-align: right;
 }
 .onoffswitch-switch {
-    display: block; width: 18px; margin: 9.5px;
+    display: block; width: 15px; margin: 9.5px;
     background: #FFFFFF;
     position: absolute; top: 0; bottom: 0;
     right: 73px;

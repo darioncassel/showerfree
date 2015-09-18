@@ -28,6 +28,15 @@ if (Meteor.isServer) {
           };
           Showers.insert(shower)
         }
+        for(i=1;i<3;i++) {
+          var shower = {
+            "name": "Shower " + i,
+            "floor": 3,
+            "occupied": false,
+            "lock": null
+          };
+          Showers.insert(shower)
+        }
       }
     },
     removeAll: function () {
@@ -64,6 +73,15 @@ if (Meteor.isServer) {
         var shower = {
           "name": "Shower " + i,
           "floor": 2,
+          "occupied": false,
+          "lock": null
+        };
+        Showers.insert(shower)
+      }
+      for(i=1;i<3;i++) {
+        var shower = {
+          "name": "Shower " + i,
+          "floor": 3,
           "occupied": false,
           "lock": null
         };

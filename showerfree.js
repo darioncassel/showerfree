@@ -13,32 +13,32 @@ if (Meteor.isClient) {
   var timeDep = new Tracker.Dependency;
   var canLockDep = new Tracker.Dependency;
 
-	Meteor.subscribe("showers", function () {
-    if (Meteor.cookie.get('username') == undefined || Meteor.cookie.get('username') == null) {
-      user=randomString(10);
-      var pass=randomString(10);
-      Meteor.cookie.set('username', user, Infinity)
-      Meteor.cookie.set('password', pass, Infinity)
-      Meteor.cookie.set('canLock', true, Infinity)
-      Accounts.createUser({username:user, password:pass});
-    } else {
-      if (Meteor.cookie.get('canLock') == undefined || Meteor.cookie.get('canLock') == null) {
-        Meteor.cookie.set('canLock', true, Infinity)
-      }
-      user = Meteor.cookie.get('username');
-      var pass = Meteor.cookie.get('password');
-    }
-    Meteor.loginWithPassword(user, pass);
-  });
+	Meteor.subscribe("showers")
 
   Meteor.setInterval(function () {
     timeDep.changed();
   }, 60000);
 
+  Template.body.onRendered(function () {
+    var user = Meteor.cookie.get('username');
+    var pass = Meteor.cookie.get('password');
+    if (Meteor.users.find({username: user}).fetch().length == 0) {
+      user=randomString(10);
+      pass=randomString(10);
+      Meteor.cookie.set('username', user, Infinity)
+      Meteor.cookie.set('password', pass, Infinity)
+      Accounts.createUser({username:user, password:pass, profile: {canLock: true}});
+    }
+    Meteor.loginWithPassword(user, pass, function(error) {
+      canLockDep.changed();
+      mixpanel.track("Error: " + error);
+    });
+  });
+
   Template.body.events({
     "click .toggle-occu": function () {
       var user = Meteor.cookie.get('username');
-      Meteor.cookie.set('canLock', this.occupied, Infinity);
+      Meteor.user().profile.canLock = this.occupied
       canLockDep.changed();
       Meteor.call("updateShower", this._id, !this.occupied, user, function(err, data){
         if(!err){
@@ -64,6 +64,11 @@ if (Meteor.isClient) {
         return true
       }
     },
+    isThree: function (number) {
+      if (number==3) {
+        return true
+      }
+    },
     showers: function () {
       return Showers.find().fetch()
     }
@@ -73,7 +78,7 @@ if (Meteor.isClient) {
     disabled: function () {
       canLockDep.depend();
       var user = Meteor.cookie.get('username')
-      var canLock = Meteor.cookie.get('canLock')
+      var canLock = Meteor.user().profile.canLock
       if (user != this.lock && this.occupied || (canLock=="false" && this.lock != user)) {
         return "disabled";
       }
