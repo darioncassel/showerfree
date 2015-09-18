@@ -49,16 +49,19 @@ if (Meteor.isClient) {
           mixpanel.track("Error: " + error);
         }
       });
-      Meteor.call("updateShower", this._id, !this.occupied, user, function(error, data){
-        if (!error) {
-          var temp = [this._id];
-          temp.push(this.name);
-          temp.push("floor"+this.floor);
-          temp.push(this.occupied ? "start" : "end");
-          temp.push(user);
-          mixpanel.track(temp.join(","));
-        } else {
-          mixpanel.track("Error: " + error)
+      var showerId = this._id;
+      var showerName = this.name;
+      var showerFloor = this.floor;
+      var userId = user;
+      var showerOccupied = this.occupied;
+      Meteor.call("updateShower", this._id, !this.occupied, user, function(err, data){
+        if(!err){
+          mixpanel.track(showerOccupied? "start" : "end", {
+            "showerId" : showerId,
+            "showerName" : showerName,
+            "showerFloor" : showerFloor,
+            "userId" : userId
+          });
         }
       });
     }
