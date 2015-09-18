@@ -22,11 +22,13 @@ if (Meteor.isClient) {
   Template.body.onRendered(function () {
     var user = Meteor.cookie.get('username');
     var pass = Meteor.cookie.get('password');
-    if (Meteor.users.find({username: user}).fetch().length == 0) {
-      user=randomString(10);
-      pass=randomString(10);
+    if (user == undefined || user == null) {
+      user = randomString(10);
+      pass = randomString(10);
       Meteor.cookie.set('username', user, Infinity)
       Meteor.cookie.set('password', pass, Infinity)
+      Accounts.createUser({username:user, password:pass, profile: {canLock: true}});
+    } else if (!Meteor.users.findOne({username: user})) {
       Accounts.createUser({username:user, password:pass, profile: {canLock: true}});
     }
     Meteor.loginWithPassword(user, pass, function(error) {
