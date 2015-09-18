@@ -1,5 +1,5 @@
 if (Meteor.isServer) {
-  const SHOWER_TIMEOUT = 1000 * 60 * 45; // 45 minutes
+  const SHOWER_TIMEOUT = 1000 * 60 * 44; // 44 minutes
   Showers = new Mongo.Collection("showers");
   Accounts.onLogin(function() {
     Meteor.publish("showers", function() {

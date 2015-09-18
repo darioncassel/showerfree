@@ -33,23 +33,32 @@ if (Meteor.isClient) {
     }
     Meteor.loginWithPassword(user, pass, function(error) {
       canLockDep.changed();
-      mixpanel.track("Error: " + error);
+      if (error) {
+        mixpanel.track("Error: " + error);
+      }
     });
   });
 
   Template.body.events({
     "click .toggle-occu": function () {
       var user = Meteor.cookie.get('username');
-      Meteor.call('updateUser', Meteor.user()._id, this.occupied)
-      canLockDep.changed();
-      Meteor.call("updateShower", this._id, !this.occupied, user, function(err, data){
-        if(!err){
+      Meteor.call('updateUser', Meteor.user()._id, this.occupied, function (error) {
+        canLockDep.changed();
+        if (error) {
+          console.log(error)
+          mixpanel.track("Error: " + error);
+        }
+      });
+      Meteor.call("updateShower", this._id, !this.occupied, user, function(error, data){
+        if (!error) {
           var temp = [this._id];
           temp.push(this.name);
           temp.push("floor"+this.floor);
           temp.push(this.occupied ? "start" : "end");
           temp.push(user);
           mixpanel.track(temp.join(","));
+        } else {
+          mixpanel.track("Error: " + error)
         }
       });
     }
@@ -81,7 +90,8 @@ if (Meteor.isClient) {
       canLockDep.depend();
       var user = Meteor.cookie.get('username')
       var canLock = Meteor.user().profile.canLock
-      if (user != this.lock && this.occupied || (!canLock && this.lock != user)) {
+      if ((user != this.lock && this.occupied) || (!canLock && this.lock != user)) {
+        console.log("disabled");
         return "disabled";
       }
     },
