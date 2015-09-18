@@ -40,7 +40,16 @@ if (Meteor.isClient) {
       var user = Meteor.cookie.get('username');
       Meteor.cookie.set('canLock', this.occupied, Infinity);
       canLockDep.changed();
-      Meteor.call("updateShower", this._id, !this.occupied, user)
+      Meteor.call("updateShower", this._id, !this.occupied, user, function(err, data){
+        if(!err){
+          var temp = [this._id];
+          temp.push(this.name);
+          temp.push("floor"+this.floor);
+          temp.push(this.occupied ? "start" : "end");
+          temp.push(user);
+          mixpanel.track(temp.join(","));
+        }
+      });
     }
   });
 

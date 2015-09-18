@@ -33,7 +33,7 @@ if (Meteor.isServer) {
     removeAll: function () {
       Showers.remove({});
     },
-    updateShower: function(id, occupied, user) {
+    updateShower: function(id, occupied, user, callback) {
       Showers.update(id, {
         $set: {occupied: occupied, lock: user, lockTime: new Date()},
       });
@@ -45,6 +45,7 @@ if (Meteor.isServer) {
           });
         }
       }, SHOWER_TIMEOUT);
+      return true;
     }
   });
 
