@@ -11,6 +11,7 @@ if (Meteor.isClient) {
   Showers = new Mongo.Collection("showers")
 
   var timeDep = new Tracker.Dependency;
+  var canLockDep = new Tracker.Dependency;
 
 	Meteor.subscribe("showers", function () {
     if (Meteor.cookie.get('username') == undefined || Meteor.cookie.get('username') == null) {
@@ -18,6 +19,7 @@ if (Meteor.isClient) {
       var pass=randomString(10);
       Meteor.cookie.set('username', user)
       Meteor.cookie.set('password', pass)
+      Meteor.cookie.set('canLock', true)
       Accounts.createUser({username:user, password:pass});
     } else {
       user = Meteor.cookie.get('username');
@@ -33,6 +35,9 @@ if (Meteor.isClient) {
   Template.body.events({
     "click .toggle-occu": function () {
       var user = Meteor.cookie.get('username');
+      Meteor.cookie.set('canLock', this.occupied);
+      console.log(this.occupied);
+      canLockDep.changed();
       Meteor.call("updateShower", this._id, !this.occupied, user)
     }
   });
@@ -55,8 +60,10 @@ if (Meteor.isClient) {
 
   Template.shower.helpers({
     disabled: function () {
+      canLockDep.depend();
       var user = Meteor.cookie.get('username')
-      if (user != this.lock && this.occupied) {
+      var canLock = Meteor.cookie.get('canLock')
+      if (user != this.lock && this.occupied || !canLock) {
         return "disabled";
       }
     },
