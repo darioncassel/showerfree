@@ -49,6 +49,13 @@ h1 {
 	align-items: stretch;
 }
 
+.shower {
+	text-align: center;
+}
+.onoffswitch-inner {
+	text-align: left;
+}
+
 .instructions {
 	margin-bottom: 4em;
 }

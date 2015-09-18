@@ -52,7 +52,7 @@ if (Meteor.isServer) {
     if (Showers.find().fetch().length == 0) {
       for(i=1;i<3;i++) {
         var shower = {
-          "name": "shower " + i,
+          "name": "Shower " + i,
           "floor": 1,
           "occupied": false,
           "lock": null
@@ -61,7 +61,7 @@ if (Meteor.isServer) {
       }
       for(i=1;i<3;i++) {
         var shower = {
-          "name": "shower " + i,
+          "name": "Shower " + i,
           "floor": 2,
           "occupied": false,
           "lock": null
