@@ -17,13 +17,13 @@ if (Meteor.isClient) {
     if (Meteor.cookie.get('username') == undefined || Meteor.cookie.get('username') == null) {
       user=randomString(10);
       var pass=randomString(10);
-      Meteor.cookie.set('username', user)
-      Meteor.cookie.set('password', pass)
-      Meteor.cookie.set('canLock', true)
+      Meteor.cookie.set('username', user, Infinity)
+      Meteor.cookie.set('password', pass, Infinity)
+      Meteor.cookie.set('canLock', true, Infinity)
       Accounts.createUser({username:user, password:pass});
     } else {
       if (Meteor.cookie.get('canLock') == undefined || Meteor.cookie.get('canLock') == null) {
-        Meteor.cookie.set('canLock', true)
+        Meteor.cookie.set('canLock', true, Infinity)
       }
       user = Meteor.cookie.get('username');
       var pass = Meteor.cookie.get('password');
@@ -38,7 +38,7 @@ if (Meteor.isClient) {
   Template.body.events({
     "click .toggle-occu": function () {
       var user = Meteor.cookie.get('username');
-      Meteor.cookie.set('canLock', this.occupied);
+      Meteor.cookie.set('canLock', this.occupied, Infinity);
       canLockDep.changed();
       Meteor.call("updateShower", this._id, !this.occupied, user)
     }
