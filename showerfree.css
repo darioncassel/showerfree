@@ -72,6 +72,8 @@ h1 {
 .onoffswitch {
     position: relative; width: 110px;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+    margin-left:auto;
+    margin-right:auto;
 }
 .onoffswitch-checkbox {
     display: none;
