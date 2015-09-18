@@ -53,8 +53,9 @@ if (Meteor.isClient) {
       var showerFloor = this.floor;
       var userId = user;
       var showerOccupied = this.occupied;
-      Meteor.call("updateShower", this._id, !this.occupied, user, function(err, data){
-        if(!err){
+      Meteor.call("updateShower", this._id, !this.occupied, user, function (error, data) {
+        canLockDep.changed();
+        if (!error) {
           mixpanel.track(showerOccupied? "start" : "end", {
             "showerId" : showerId,
             "showerName" : showerName,
@@ -62,7 +63,6 @@ if (Meteor.isClient) {
             "userId" : userId
           });
         }
-        canLockDep.changed();
       });
     }
   });
@@ -94,7 +94,6 @@ if (Meteor.isClient) {
       var user = Meteor.cookie.get('username')
       var canLock = Meteor.user().profile.canLock
       if ((user != this.lock && this.occupied) || (!canLock && this.lock != user)) {
-        console.log("disabled");
         return "disabled";
       }
     },
