@@ -34,6 +34,7 @@ if (Meteor.isClient) {
     Meteor.loginWithPassword(user, pass, function(error) {
       canLockDep.changed();
       if (error) {
+        alert("Please refresh the page");
         mixpanel.track("Error: " + error);
       }
     });
@@ -93,8 +94,14 @@ if (Meteor.isClient) {
       canLockDep.depend();
       var user = Meteor.cookie.get('username')
       var canLock = Meteor.user().profile.canLock
-      if ((user != this.lock && this.occupied) || (!canLock && this.lock != user)) {
-        return "disabled";
+      if (this.lock) {
+        if (user != this.lock) {
+          return "disabled";
+        }
+      } else {
+        if (!canLock) {
+          return "disabled";
+        }
       }
     },
     time : function () {
