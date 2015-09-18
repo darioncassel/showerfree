@@ -43,8 +43,9 @@ if (Meteor.isServer) {
       Showers.remove({});
     },
     updateShower: function(id, occupied, user, callback) {
+      var newlock = occupied ? user : null;
       Showers.update(id, {
-        $set: {occupied: occupied, lock: user, lockTime: new Date()},
+        $set: {occupied: occupied, lock: newlock, lockTime: new Date()},
       });
       Meteor.setTimeout(function(){
         var thisShower = Showers.findOne(id);

@@ -43,7 +43,6 @@ if (Meteor.isClient) {
     "click .toggle-occu": function () {
       var user = Meteor.cookie.get('username');
       Meteor.call('updateUser', Meteor.user()._id, this.occupied, function (error) {
-        canLockDep.changed();
         if (error) {
           console.log(error)
           mixpanel.track("Error: " + error);
@@ -63,6 +62,7 @@ if (Meteor.isClient) {
             "userId" : userId
           });
         }
+        canLockDep.changed();
       });
     }
   });
