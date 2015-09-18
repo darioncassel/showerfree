@@ -65,7 +65,7 @@ if (Meteor.isClient) {
       canLockDep.depend();
       var user = Meteor.cookie.get('username')
       var canLock = Meteor.cookie.get('canLock')
-      if (user != this.lock && this.occupied || canLock=="false") {
+      if (user != this.lock && this.occupied || (canLock=="false" && this.lock != user)) {
         return "disabled";
       }
     },
