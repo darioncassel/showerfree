@@ -55,6 +55,11 @@ if (Meteor.isServer) {
         }
       }, SHOWER_TIMEOUT);
       return true;
+    },
+    updateUser: function(id, canLock) {
+      Meteor.users.update(id, {
+        $set: {'profile.canLock': canLock}
+      });
     }
   });
 

@@ -40,7 +40,7 @@ if (Meteor.isClient) {
   Template.body.events({
     "click .toggle-occu": function () {
       var user = Meteor.cookie.get('username');
-      Meteor.user().profile.canLock = this.occupied
+      Meteor.call('updateUser', Meteor.user()._id, this.occupied)
       canLockDep.changed();
       Meteor.call("updateShower", this._id, !this.occupied, user, function(err, data){
         if(!err){
@@ -81,7 +81,7 @@ if (Meteor.isClient) {
       canLockDep.depend();
       var user = Meteor.cookie.get('username')
       var canLock = Meteor.user().profile.canLock
-      if (user != this.lock && this.occupied || (canLock=="false" && this.lock != user)) {
+      if (user != this.lock && this.occupied || (!canLock && this.lock != user)) {
         return "disabled";
       }
     },
